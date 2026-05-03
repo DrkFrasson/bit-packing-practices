@@ -4,8 +4,18 @@ use std::io;
 fn main()
 {
     let mut answers: u8 = 0;
+   /*
+    * The length of this variable, along side
+    * the type of the data in the functions
+    * determines the capacity of the answers
+    * saved into.
+    *
+    * (Eight answers to the u8 data type)
+    */
+
     println!("The following questions are [y]es or [n]ot answers:");
-    
+
+
     if interviewer(0) // Do you use NeoVim?
     {
         answers = set(answers, 0);
@@ -19,29 +29,29 @@ fn main()
     }else{
         answers = clear(answers, 1);
     }
-    
+
     if interviewer(2) // Do you watch Core Dumped?
     {
         answers = set(answers, 2);
     }else{
         answers = clear(answers, 2);
     }
-    
+
     if interviewer(3) // Is Rust in the top 3° better langs?
     {
         answers = set(answers, 3);
     }else{
         answers = clear(answers, 3);
     }
-    
+
     if interviewer(4) // Are you Derek?
     {
         answers = set(answers, 4);
     }else{
         answers = clear(answers, 4);
     }
-    
-    if interviewer(5) // Is Linux the best OS?
+
+    if interviewer(5) // Is Linux over Windows the best OS?
     {
         answers = set(answers, 5);
     }else{
@@ -52,20 +62,24 @@ fn main()
 
         answers = set(answers, 5);
     }
-    
-    if interviewer(6) // Do you wanna learn about bitpacking?
+
+    if interviewer(6) // Do you think bit-packing is worth today?
     {
         answers = set(answers, 6);
     }else{
         answers = clear(answers, 6);
     }
 
-
-
+    if interviewer(7) // Do you wanna learn about bitpacking?
+    {
+        answers = set(answers, 7);
+    }else{
+        answers = clear(answers, 7);
+    }
 
     // -----------------------------------------
 
-    responce(answers);
+//    responce(answers);
 
     println!("\nResponses: {}", list(answers));
     println!("Or {answers} in decimal.");
@@ -89,9 +103,10 @@ fn list(answers: u8) -> String
     return response;
 }
 
+/*
 fn responce(answers: u8)
 {
-    if read(answers, 6) == 1
+    if read(answers, 7) == 1
     {
         println!("- Sorry, but you are in the wrong place!");
         if read(answers, 0) == 1
@@ -100,13 +115,11 @@ fn responce(answers: u8)
         }else{
             println!("- If so, do: \"$ cat ./main.rs\" in you terminal emulator, there is the answer!");
         }
-        if read(answers, 4) != 1
-        {
-            println!("\n- Oh!, and if you don't have one of these, maybe the lesson is not for you!");
-        }else{
-        }
+        println!("Or watch this awesome video from Jorge at Core Dumped: https://-----------------------------");
+    }else{
+        break;
     }
-}
+}*/
 
 fn interviewer(index: usize) -> bool
 {
@@ -116,7 +129,8 @@ fn interviewer(index: usize) -> bool
     "Do you watch Core Dumped",
     "Is Rust in the top 3° better langs",
     "Are you Derek",
-    "Is Linux the best OS",
+    "Is Linux over Windows the best OS?",
+    "Do you think bit-packing is worth today?",
     "Do you wanna learn about bitpacking"
     ];
 
