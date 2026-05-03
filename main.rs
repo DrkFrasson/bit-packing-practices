@@ -115,7 +115,7 @@ fn responce(answers: u8)
         }else{
             println!("- If so, do: \"$ cat ./main.rs\" in you terminal emulator, there is the answer!");
         }
-        println!("Or watch this awesome video from Jorge at Core Dumped: https://-----------------------------");
+        println!("Or watch this awesome video from Jorge at Core Dumped: https://www.youtube.com/watch?v=z7wVUfnm7M0&pp=0gcJCd4KAYcqIYzv");
     }else{
         break;
     }
