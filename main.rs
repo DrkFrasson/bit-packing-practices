@@ -1,20 +1,11 @@
 use std::io;
+use std::string::String;
 
 
 fn main()
 {
     let mut answers: u8 = 0;
-   /*
-    * The length of this variable, along side
-    * the type of the data in the functions
-    * determines the capacity of the answers
-    * saved into.
-    *
-    * (Eight answers to the u8 data type)
-    */
-
     println!("The following questions are [y]es or [n]ot answers:");
-
 
     if interviewer(0) // Do you use NeoVim?
     {
@@ -51,7 +42,7 @@ fn main()
         answers = clear(answers, 4);
     }
 
-    if interviewer(5) // Is Linux over Windows the best OS?
+    if interviewer(5) // Is Linux the best OS?
     {
         answers = set(answers, 5);
     }else{
@@ -63,26 +54,48 @@ fn main()
         answers = set(answers, 5);
     }
 
-    if interviewer(6) // Do you think bit-packing is worth today?
+    if interviewer(6) // Do you wanna learn about bitpacking?
     {
         answers = set(answers, 6);
     }else{
         answers = clear(answers, 6);
     }
 
-    if interviewer(7) // Do you wanna learn about bitpacking?
-    {
-        answers = set(answers, 7);
-    }else{
-        answers = clear(answers, 7);
-    }
+
+
 
     // -----------------------------------------
+    let answers_string: String = list(answers);
 
-//    responce(answers);
+    responce(answers);
 
-    println!("\nResponses: {}", list(answers));
+    println!("\nResponses: {}", answers_string);
+    comparison(answers);
+
     println!("Or {answers} in decimal.");
+}
+
+
+fn comparison(word: u8)
+{
+    println!("You could be using 8 bytes of storage:");
+
+    let mut i = 0;
+    while i < 8
+    {
+        print!("0000000");
+
+        println!("{}", read(word, i));
+
+        i += 1;
+/*
+        match (word[i])
+        {
+            "1" => print!("1"),
+            "0" => print!("0"),
+        }
+*/
+    }
 }
 
 fn list(answers: u8) -> String
@@ -103,10 +116,9 @@ fn list(answers: u8) -> String
     return response;
 }
 
-/*
 fn responce(answers: u8)
 {
-    if read(answers, 7) == 1
+    if read(answers, 6) == 1
     {
         println!("- Sorry, but you are in the wrong place!");
         if read(answers, 0) == 1
@@ -115,13 +127,15 @@ fn responce(answers: u8)
         }else{
             println!("- If so, do: \"$ cat ./main.rs\" in you terminal emulator, there is the answer!");
         }
-        println!("Or watch this awesome video from Jorge at Core Dumped: https://www.youtube.com/watch?v=z7wVUfnm7M0&pp=0gcJCd4KAYcqIYzv");
-    }else{
-        break;
+        if read(answers, 4) != 1
+        {
+            println!("\n- Oh!, and if you don't have one of these, maybe the lesson is not for you!");
+        }else{
+        }
     }
-}*/
+}
 
-fn interviewer(index: usize) -> bool
+fn interviewer(index: u8) -> bool
 {
     let questions_db = [
     "Do you use NeoVim",
@@ -129,12 +143,11 @@ fn interviewer(index: usize) -> bool
     "Do you watch Core Dumped",
     "Is Rust in the top 3° better langs",
     "Are you Derek",
-    "Is Linux over Windows the best OS?",
-    "Do you think bit-packing is worth today?",
+    "Is Linux the best OS",
     "Do you wanna learn about bitpacking"
     ];
 
-    println!("0{}. {}?", index + 1, questions_db[index]);
+    println!("0{}. {}?", index + 1, questions_db[index as usize]);
 
     let mut answer: String = Default::default();
 
