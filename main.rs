@@ -1,5 +1,5 @@
 use std::io;
-use std::string::String;
+// use std::string::String;
 
 
 fn main()
@@ -54,13 +54,19 @@ fn main()
         answers = set(answers, 5);
     }
 
-    if interviewer(6) // Do you wanna learn about bitpacking?
+    if interviewer(6) // Do you think bit-packing is worth today?
     {
         answers = set(answers, 6);
     }else{
         answers = clear(answers, 6);
     }
 
+    if interviewer(7) // Do you wanna learn about bitpacking?
+    {
+        answers = set(answers, 7);
+    }else{
+        answers = clear(answers, 7);
+    }
 
 
 
@@ -69,10 +75,10 @@ fn main()
 
     responce(answers);
 
-    println!("\nResponses: {}", answers_string);
+    print!("\n");
     comparison(answers);
-
-    println!("Or {answers} in decimal.");
+    println!("\nInstead that's using: {}", answers_string);
+    println!("                          |-> {answers} in decimal.\n");
 }
 
 
@@ -88,13 +94,6 @@ fn comparison(word: u8)
         println!("{}", read(word, i));
 
         i += 1;
-/*
-        match (word[i])
-        {
-            "1" => print!("1"),
-            "0" => print!("0"),
-        }
-*/
     }
 }
 
@@ -144,6 +143,7 @@ fn interviewer(index: u8) -> bool
     "Is Rust in the top 3° better langs",
     "Are you Derek",
     "Is Linux the best OS",
+    "Do you think bit-packing is worth today",
     "Do you wanna learn about bitpacking"
     ];
 
