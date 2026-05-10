@@ -14,23 +14,24 @@ This could help in embeded systems that have a limited storage capacity.
 
 In this program this didn't have a real advantage, rather, adding complexity, because isn't storing nothing in hard disk and the additional instructions to the actual bit-packing part grows the size of the program that's loaded into memory, but this is only a practice what i'm implementing to a future project that maybe help's.
 
+# Repository Index:
+```bash
+DrkFrasson/bit-packing-practices/ $ ls ./*
+
+./c_lang -> Simbolic Link to the actual place of the C++ version of the program.
+./kotlin_lang -> Simbolic Link to the actual place of the Kotlin version of the program.(Coming soon!)
+./README.md -> README of the repo. (This file)
+
+./Rust/
+    main.rs -> Version of the program in the Rust programming language.
+    main* -> Binary compiled from ./main.rs
+
+./C++/
+    main.cpp -> Version of the program in the C++ programming language.
+    a.out* -> Binary compiled from ./main.cpp
+```
 # Sources:
 I learned all this from this awesome video from [Core Dumped](https://www.youtube.com/@CoreDumpped):
 [Why Some low-level Projects Are Full of Weird Code Like This](https://www.youtube.com/watch?v=z7wVUfnm7M0&pp=0gcJCd4KAYcqIYzv)
 
-Example:
-
-possition = 3;
-word = 01011100;
-
-word >> possition; = 
-
-010[1]1100 3-> 0000010[1]
-         & 0000000 1 = 00000001 = 1;
-
-
-possition = 4;
-
-01[0]11100 4-> 0000001[0]
-         & 0000000 1 = 00000000 = 0;
 
