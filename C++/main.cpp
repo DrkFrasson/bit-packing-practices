@@ -2,7 +2,7 @@
 #include <string>
 #include <print>
 
-bool interviewer(unsigned char index)
+bool interviewer(short index)
 {
 	std::string answer;
 	std::string questions_db[8] = {
@@ -40,23 +40,45 @@ unsigned char write(unsigned char word, unsigned char possition, bool digit)
 	}
 }
 
-char read(unsigned char word, unsigned char possition){return (word >> possition) & 1;}
+unsigned char read(unsigned char word, unsigned char possition){return (word >> possition) & 1;}
 
 // <--<--<--<--
 
 std::string list (unsigned char word)
 {
 	std::string string_of_bits;
-	for(short i = 0; i < 8; i++)
+	for(short i = 7; i >= 0; i--)
 	{
-		string_of_bits += read(word, i);
+		unsigned char i_readed = read(word, i);
+		if ( i_readed == 0)
+		{
+			string_of_bits += "0";
+		}else if(i_readed == 1){
+			string_of_bits += "1";
+		}else{std::println("Error in list(), index {}", i);}
+	
+/*
+		switch (read(word, i))
+		{
+			case 0: string_of_bits += "0";
+			case 1: string_of_bits += "1";
+			default: std::println("Error in list(), index {}", i);
+		};
+*/
+//		string_of_bits += read(word, i);
 	}
-	return (string_of_bits);
+	return string_of_bits;
 }
 
 void comparison(unsigned char answers)
 {
-	s 
+	std::println("You could be using 8 bytes of storage:");
+	for(short i = 0; i < 8; i++)
+	{
+//		std::print("0000000");
+		std::cout << "0000000" << read(answers, i) << std::endl;
+//		std::println("{}", read(answers, i));
+	}
 }
 
 int main()
@@ -74,4 +96,5 @@ int main()
 	}
 	std::println("Your responce was: {}", list(answers));
 	std::println("Or {} in decimal.", answers);
+	comparison(answers);
 }
