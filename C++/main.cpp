@@ -73,11 +73,18 @@ std::string list (unsigned char word)
 void comparison(unsigned char answers)
 {
 	std::println("You could be using 8 bytes of storage:");
+	std::string i_readed;
 	for(short i = 0; i < 8; i++)
 	{
-//		std::print("0000000");
-		std::cout << "0000000" << read(answers, i) << std::endl;
-//		std::println("{}", read(answers, i));
+		if (read(answers, i) == 1)
+		{
+			i_readed = "1";
+		}else if (read(answers, i) == 0)
+		{
+			i_readed = "0";
+		}else{std::println("Error in this patch of sh***");}
+		std::print("0000000");
+		std::println("{}", i_readed);
 	}
 }
 
