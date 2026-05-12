@@ -7,22 +7,12 @@ fn main()
     let mut answers: u8 = 0;
     println!("The following questions are [y]es or [n]ot answers:");
 
-    answers = if interviewer(0){set(answers, 0)}else{clear(answers, 0)};
-
-    answers = if interviewer(1){set(answers, 1)}else{clear(answers, 1)};
-
-    answers = if interviewer(2){set(answers, 2)}else{clear(answers, 2)};
-
-    answers = if interviewer(3){set(answers, 3)}else{clear(answers, 3)};
-
-    answers = if interviewer(4){set(answers, 4)}else{clear(answers, 4)};
-
-    answers = if interviewer(5){set(answers, 5)}else{clear(answers, 5)}
-
-    answers = if interviewer(6){set(answers, 6)}else{clear(answers, 6)};
-
-    answers = if interviewer(7){set(answers, 7)}else{clear(answers, 7)};
-
+    let mut i: u8 = 0;
+    while i < 8
+    {
+        answers = if interviewer(i){set(answers, i)}else{clear(answers, i)};
+        i += 1;
+    }
 
     // -----------------------------------------
     let answers_string: String = list(answers);
