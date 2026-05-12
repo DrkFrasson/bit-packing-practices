@@ -7,67 +7,21 @@ fn main()
     let mut answers: u8 = 0;
     println!("The following questions are [y]es or [n]ot answers:");
 
-    if interviewer(0) // Do you use NeoVim?
-    {
-        answers = set(answers, 0);
-    }else{
-        answers = clear(answers, 0);
-    }
+    answers = if interviewer(0){set(answers, 0)}else{clear(answers, 0)};
 
-    if interviewer(1) // Do you like programming?
-    {
-        answers = set(answers, 1);
-    }else{
-        answers = clear(answers, 1);
-    }
+    answers = if interviewer(1){set(answers, 1)}else{clear(answers, 1)};
 
-    if interviewer(2) // Do you watch Core Dumped?
-    {
-        answers = set(answers, 2);
-    }else{
-        answers = clear(answers, 2);
-    }
+    answers = if interviewer(2){set(answers, 2)}else{clear(answers, 2)};
 
-    if interviewer(3) // Is Rust in the top 3° better langs?
-    {
-        answers = set(answers, 3);
-    }else{
-        answers = clear(answers, 3);
-    }
+    answers = if interviewer(3){set(answers, 3)}else{clear(answers, 3)};
 
-    if interviewer(4) // Are you Derek?
-    {
-        answers = set(answers, 4);
-    }else{
-        answers = clear(answers, 4);
-    }
+    answers = if interviewer(4){set(answers, 4)}else{clear(answers, 4)};
 
-    if interviewer(5) // Is Linux the best OS?
-    {
-        answers = set(answers, 5);
-    }else{
-        while !interviewer(5)
-        {
-                continue;
-        }
+    answers = if interviewer(5){set(answers, 5)}else{clear(answers, 5)}
 
-        answers = set(answers, 5);
-    }
+    answers = if interviewer(6){set(answers, 6)}else{clear(answers, 6)};
 
-    if interviewer(6) // Do you think bit-packing is worth today?
-    {
-        answers = set(answers, 6);
-    }else{
-        answers = clear(answers, 6);
-    }
-
-    if interviewer(7) // Do you wanna learn about bitpacking?
-    {
-        answers = set(answers, 7);
-    }else{
-        answers = clear(answers, 7);
-    }
-
+    answers = if interviewer(7){set(answers, 7)}else{clear(answers, 7)};
 
 
     // -----------------------------------------
