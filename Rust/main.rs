@@ -10,7 +10,8 @@ fn main()
     let mut i: u8 = 0;
     while i < 8
     {
-        answers = if interviewer(i){set(answers, i)}else{clear(answers, i)};
+        answers = write(answers, i, interviewer(i));
+//          if interviewer(i){set(answers, i)}else{clear(answers, i)};
         i += 1;
     }
 
@@ -48,7 +49,8 @@ fn list(answers: u8) -> String
 
     while index < 8
     {
-        match read(answers, 7 - index)
+        match read(answers, 7 - index) //--> 7 - index is to start adding digits from the most significant one, to display
+                                       //it correctly, because the chars added first ends at the right of the string.
         {
             1 => response += "1",
             0 => response += "0",
@@ -104,18 +106,36 @@ fn interviewer(index: u8) -> bool
         .parse()
         .expect("error[E001]");
 
-    if answer == "y"
+    return
+        match answer
+        {
+            'y' => true,
+            'n' => false,
+            other => 
+            {
+                println!("Not such a valid response!, again!");
+                interviewer(index)
+            }
+        }
+    // if answer == "y"{true}else if answer == "n" {false}else{println!("Not such a valid response!, again!");interviewer(index)}
+}
+
+fn write(answers_registry: u8, possition: u8, digit:/*--> digit indicates if it puts a 1 or 0 ->*/ bool) -> u8
+{
+    match digit
     {
-        return true;
-    }else if answer == "n"
-    {
-        return false;
-    }else{
-        println!("Not such a valid response!, again!");
-        return interviewer(index);
+        true => answers_registry | (1 << possition),
+        false => answers_registry & !(1 << possition),
     }
 }
 
+fn read(answers_registry: u8, possition: u8) -> u8 // Read the bit in the 
+                                                   // possition specified.
+{
+    return (answers_registry >> possition) & 1;
+}
+
+/*
 fn set(answers_registry: u8, possition: u8) -> u8 // Change the bit in
                                                   // the possition
                                                   // specified to "1".
@@ -130,12 +150,6 @@ fn clear(answers_registry: u8, possition: u8) -> u8 // Change the bit in
     answers_registry & !(1 << possition)
 }
 
-fn read(answers_registry: u8, possition: u8) -> u8 // Read the bit in the 
-                                                   // possition specified.
-{
-    return (answers_registry >> possition) & 1;
-}
-
 
 /*
 fn flip(answers_registry: u8, possition: u8) -> u8 {
@@ -146,5 +160,5 @@ fn flip(answers_registry: u8, possition: u8) -> u8 {
  in the possition
  specified to the
  opposite.
-*/*/
+*/*/*/
 

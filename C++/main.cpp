@@ -8,12 +8,12 @@ bool interviewer(short index)
 	std::string questions_db[8] = {
 	"Does exist micro-controlers with 64 bits architecture",
 	"Is Processing like a dialect of C++",
-	"idk3",
-	"idk4",
-	"idk5",
-	"idk6",
-	"idk7",
-	"idk8",
+	"Is Assembler a kind of a representation of machine code rather than a language",
+	"Do you like the Zig Programming Language",
+	"Is DOS earlier than UNIX",
+	"A WORD is 2 bytes",
+	"Is the microcontroler 8085 of 16-bit arch",
+	"Is the LM555 a multi-vibrator",
 	};
 	std::print("0{}. {}? > ", (index + 1), questions_db[index]);
 	std::cin >> answer;
@@ -101,7 +101,8 @@ int main()
 			answers = write(answers, i, false);
 		}
 	}
-	std::println("Your responce was: {}", list(answers));
-	std::println("Or {} in decimal.", answers);
+	std::print("\n");
 	comparison(answers);
+	std::println("\nInstead you're using only one: {}", list(answers));
+	std::println("				      |-> {} in decimal.", answers);
 }
