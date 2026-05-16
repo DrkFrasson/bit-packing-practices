@@ -11,21 +11,76 @@ fn main()
     while i < 8
     {
         answers = write(answers, i, interviewer(i));
-//          if interviewer(i){set(answers, i)}else{clear(answers, i)};
         i += 1;
     }
 
-    // -----------------------------------------
-    let answers_string: String = list(answers);
+    print!("\n");
+    println!("Do you wanna change someone of your responces? (default: n)");
+
+    let mut wanna_redo: String = Default::default();
+
+    io::stdin()
+        .read_line(&mut wanna_redo)
+        .expect("Failed to read your choice!\n");
+
+    let wanna_redo: String = wanna_redo
+        .trim()
+        .parse()
+        .expect("Failed to sanitize input!");
+
+    if wanna_redo == "y"
+    {
+        answers = redo_answers(answers);
+    }else{
+    }
+
+    println!("Saving...");
 
     responce(answers);
-
-    print!("\n");
-    comparison(answers);
-    println!("\nInstead that's using: {}", answers_string);
-    println!("                          |-> {answers} in decimal.\n");
 }
 
+/// ## `fn redo_answers()`
+/// This function is maded to give use to the `fn flip()` function
+/// it does ask the user to give the number of question that wanna
+/// do again and stores his value in a 
+fn redo_answers(mut answers_registry: u8) -> u8
+{
+    println!("Whitch one of your answers you wanna change?");
+
+    loop
+    {
+        let mut answr_nmbr: String = String::new();
+
+        io::stdin()
+            .read_line(&mut answr_nmbr)
+            .expect("Failed to read question to change!");
+
+        let answr_nmbr: String = answr_nmbr
+            .trim()
+            .parse()
+            .expect("Failed to sanitize input!");
+
+        if answr_nmbr == "n" || answr_nmbr == ""
+        {
+            return answers_registry;
+        }else{
+            let mut answr_nmbr: u8 = answr_nmbr
+                .trim()
+                .parse()
+                .expect("Failed to convert to number!");
+
+            if answr_nmbr <= 8
+            {
+                answr_nmbr -= 1;
+                answers_registry = flip(answers_registry, answr_nmbr);
+            }else{
+                return answers_registry;
+            }
+        }
+        println!("{}", list(answers_registry));
+        println!("Do you wanna re-do other answer?, number/(default: n)");
+    }
+}
 
 fn comparison(word: u8)
 {
@@ -49,8 +104,7 @@ fn list(answers: u8) -> String
 
     while index < 8
     {
-        match read(answers, 7 - index) //--> 7 - index is to start adding digits from the most significant one, to display
-                                       //it correctly, because the chars added first ends at the right of the string.
+        match read(answers, 7 - index)
         {
             1 => response += "1",
             0 => response += "0",
@@ -63,21 +117,11 @@ fn list(answers: u8) -> String
 
 fn responce(answers: u8)
 {
-    if read(answers, 6) == 1
-    {
-        println!("- Sorry, but you are in the wrong place!");
-        if read(answers, 0) == 1
-        {
-            println!("- If so, do: \"$ nvim ./main.rs\" in you terminal emulator, there is the answer!");
-        }else{
-            println!("- If so, do: \"$ cat ./main.rs\" in you terminal emulator, there is the answer!");
-        }
-        if read(answers, 4) != 1
-        {
-            println!("\n- Oh!, and if you don't have one of these, maybe the lesson is not for you!");
-        }else{
-        }
-    }
+    print!("\n");
+    comparison(answers);
+    println!("\nInstead that's using: {}", list(answers));
+    println!("                          |-> {answers} in decimal.\n");
+    print!("\n");
 }
 
 fn interviewer(index: u8) -> bool
@@ -101,23 +145,12 @@ fn interviewer(index: u8) -> bool
         .read_line(&mut answer)
         .expect("Failed to read your answer!\n");
 
-    answer = answer
+    let answer: String = answer
         .trim()
         .parse()
-        .expect("error[E001]");
+        .expect("Failed to sanitize input!");
 
-    return
-        match answer
-        {
-            'y' => true,
-            'n' => false,
-            other => 
-            {
-                println!("Not such a valid response!, again!");
-                interviewer(index)
-            }
-        }
-    // if answer == "y"{true}else if answer == "n" {false}else{println!("Not such a valid response!, again!");interviewer(index)}
+    return if answer == "y" { true }else if answer == "n" { false }else{ println!("Not such a valid response!, again!"); interviewer(index) }
 }
 
 fn write(answers_registry: u8, possition: u8, digit:/*--> digit indicates if it puts a 1 or 0 ->*/ bool) -> u8
@@ -129,36 +162,6 @@ fn write(answers_registry: u8, possition: u8, digit:/*--> digit indicates if it 
     }
 }
 
-fn read(answers_registry: u8, possition: u8) -> u8 // Read the bit in the 
-                                                   // possition specified.
-{
-    return (answers_registry >> possition) & 1;
-}
+fn read(answers_registry: u8, possition: u8) -> u8 { (answers_registry >> possition) & 1 }
 
-/*
-fn set(answers_registry: u8, possition: u8) -> u8 // Change the bit in
-                                                  // the possition
-                                                  // specified to "1".
-{
-    answers_registry | (1 << possition)
-}
-
-fn clear(answers_registry: u8, possition: u8) -> u8 // Change the bit in
-                                                    // the possition 
-                                                    // specified to "0".
-{
-    answers_registry & !(1 << possition)
-}
-
-
-/*
-fn flip(answers_registry: u8, possition: u8) -> u8 {
-    answers_registry ^ (1 << (possition -1))
-}
-/*
-|-> Change the bit 
- in the possition
- specified to the
- opposite.
-*/*/*/
-
+fn flip(answers_registry: u8, possition: u8) -> u8 { answers_registry ^ (1 << (possition)) }
