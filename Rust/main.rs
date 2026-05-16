@@ -31,10 +31,13 @@ fn main()
     if wanna_redo == "y"
     {
         answers = redo_answers(answers);
+    }else if wanna_redo == "n"{
+        // Do nothing.
     }else{
+        println!("Not a valid responce.");
     }
 
-    println!("Saving...");
+    print!("Saving...");
 
     responce(answers);
 }
@@ -78,13 +81,13 @@ fn redo_answers(mut answers_registry: u8) -> u8
             }
         }
         println!("{}", list(answers_registry));
-        println!("Do you wanna re-do other answer?, number/(default: n)");
+        println!("Do you wanna change other answer?, number/(default: n)");
     }
 }
 
 fn comparison(word: u8)
 {
-    println!("You could be using 8 bytes of storage:");
+    println!("\nYou could be using 8 bytes of storage:");
 
     let mut i = 0;
     while i < 8
