@@ -130,12 +130,7 @@ int main()
 	unsigned char answers = 0;
 	for(short i = 0; i < 8 ; i++)
 	{
-		if (interviewer(i))
-		{
-			answers = write(answers, i, true);
-		}else{
-			answers = write(answers, i, false);
-		}
+		answers = write(answers, i, (interviewer(i)));
 	}
 	std::println("Do you wanna change someone of your responces?(default: n)");
 	std::string wanna_change;
