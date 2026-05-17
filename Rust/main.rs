@@ -1,6 +1,12 @@
 use std::io;
-// use std::string::String;
 
+/// # bitwise operations and bit-packing in The Rust Programming Language.
+/// This little program is a practice to dominate the bitwise operators
+/// in bit-packing, in fact it didn't have a real advantage because it only
+/// lives in DRAM and all disapear when it finishes.
+///
+/// This tecnique is used to store values in limited storage, compression
+/// and transmission protocols.
 
 fn main()
 {
@@ -42,11 +48,14 @@ fn main()
     responce(answers);
 }
 
-/// ## `fn redo_answers()`
+/// ## `fn change_answer()`
 /// This function is maded to give use to the `fn flip()` function
-/// it does ask the user to give the number of question that wanna
-/// do again and stores his value in a 
-fn redo_answers(mut answers_registry: u8) -> u8
+/// , it ask the user to give the number of question that want to
+/// change in the registered answer calling to the flip function,
+/// it goes into a `loop`, giving the possibility to change the 
+/// answers, whatever the time's the user want to.
+
+fn change_answer(mut answers_registry: u8) -> u8
 {
     println!("Whitch one of your answers you wanna change?");
 
@@ -62,6 +71,14 @@ fn redo_answers(mut answers_registry: u8) -> u8
             .trim()
             .parse()
             .expect("Failed to sanitize input!");
+
+        /// There, the `answr_nmbr` is re-asigned after the input, that's to
+        /// sanitize the given input.
+        /// Then, it compares `answr_nmbr` to "n", if the user want to quit
+        /// the change_answer function it return the `answers_registry` that
+        /// could be modified in previous iterations of the `loop`. If that
+        /// condition isn't true it converts `answr_nmbr` to an u8 re-assigning
+        /// it, then check if is minus or ecual than 8, if it's true does
 
         if answr_nmbr == "n" || answr_nmbr == ""
         {
@@ -85,6 +102,12 @@ fn redo_answers(mut answers_registry: u8) -> u8
     }
 }
 
+/// ## `fn comparison()`
+/// This function prints the actual space that storing the values
+/// of the answers could be using if it, for example if uses a Vec<Bool>
+///
+/// It works printing seven "0" and fetching the bit in the possition
+/// specified by the iterator of the `while` loop and printing it,
 fn comparison(word: u8)
 {
     println!("\nYou could be using 8 bytes of storage:");
