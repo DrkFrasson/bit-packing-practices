@@ -2,6 +2,48 @@
 #include <string>
 #include <print>
 
+std::string ltrim(const std::string &);
+std::string rtrim(const std::string &);
+
+
+/*
+int main()
+{
+    string n_temp;
+    getline(cin, n_temp);
+
+    int n = stoi(ltrim(rtrim(n_temp)));
+*/
+
+unsigned char write(unsigned char answers_registry, unsigned char possition, bool digit)
+{
+	switch (digit)
+	{
+		case true: return (answers_registry | (1 << possition));
+		case false: return (answers_registry & ~(1 << possition));
+	}
+}
+
+unsigned char read(unsigned char answers_registry, unsigned char possition){return (answers_registry >> possition) & 1;}
+
+unsigned char flip(unsigned char answers_registry, unsigned char possition){return (answers_registry ^ (1 << possition));}
+
+std::string list (unsigned char answers_registry)
+{
+	std::string string_of_bits;
+	for(short i = 7; i >= 0; i--)
+	{
+		unsigned char i_readed = read(answers_registry, i);
+		if ( i_readed == 0)
+		{
+			string_of_bits += "0";
+		}else if(i_readed == 1){
+			string_of_bits += "1";
+		}else{std::println("Error in list(), index {}", i);}
+	}
+	return string_of_bits;
+}
+
 bool interviewer(short index)
 {
 	std::string answer;
@@ -31,44 +73,32 @@ bool interviewer(short index)
 }
 
 
-unsigned char write(unsigned char word, unsigned char possition, bool digit)
+unsigned char change_answer(unsigned char answers_registry)
 {
-	switch (digit)
+	std::println("Whitch one of your answers you wanna change?");
+	while (true)
 	{
-		case true: return (word | (1 << possition));
-		case false: return (word & ~(1 << possition));
+		std::string answr;
+		std::cin >> answr;
+		if(answr == "n" || answr == "" )
+		{
+			return answers_registry;
+		}else{
+			unsigned char answr_nmbr = stoi(answr);
+			if (answr_nmbr <= 8)
+			{
+				answr_nmbr -= 1;
+				answers_registry = flip(answers_registry, answr_nmbr);
+			}else{
+				std::println("That didn't look like a valid responce!");
+				return answers_registry;
+			}
+		}
+		std::println("{}", list(answers_registry));
+		std::println("Do you want to change other responce?, number/(default: n)");
 	}
 }
 
-unsigned char read(unsigned char word, unsigned char possition){return (word >> possition) & 1;}
-
-// <--<--<--<--
-
-std::string list (unsigned char word)
-{
-	std::string string_of_bits;
-	for(short i = 7; i >= 0; i--)
-	{
-		unsigned char i_readed = read(word, i);
-		if ( i_readed == 0)
-		{
-			string_of_bits += "0";
-		}else if(i_readed == 1){
-			string_of_bits += "1";
-		}else{std::println("Error in list(), index {}", i);}
-	
-/*
-		switch (read(word, i))
-		{
-			case 0: string_of_bits += "0";
-			case 1: string_of_bits += "1";
-			default: std::println("Error in list(), index {}", i);
-		};
-*/
-//		string_of_bits += read(word, i);
-	}
-	return string_of_bits;
-}
 
 void comparison(unsigned char answers)
 {
@@ -76,16 +106,22 @@ void comparison(unsigned char answers)
 	std::string i_readed;
 	for(short i = 0; i < 8; i++)
 	{
+		std::print("0000000");
 		if (read(answers, i) == 1)
 		{
-			i_readed = "1";
-		}else if (read(answers, i) == 0)
-		{
-			i_readed = "0";
-		}else{std::println("Error in this patch of sh***");}
-		std::print("0000000");
-		std::println("{}", i_readed);
+			std::println("1 --> (true)");
+		}else{
+			std::println("0 --> (false)");
+		}
 	}
+}
+
+void responce(unsigned char answers)
+{
+	std::print("\n");
+	comparison(answers);
+	std::println("\nInstead you're using only one: {}", list(answers));
+	std::println("				      |-> {} in decimal.", answers);
 }
 
 int main()
@@ -101,8 +137,16 @@ int main()
 			answers = write(answers, i, false);
 		}
 	}
-	std::print("\n");
-	comparison(answers);
-	std::println("\nInstead you're using only one: {}", list(answers));
-	std::println("				      |-> {} in decimal.", answers);
+	std::println("Do you wanna change someone of your responces?(default: n)");
+	std::string wanna_change;
+	std::cin >> wanna_change;
+	if (wanna_change == "y")
+	{
+		answers = change_answer(answers);
+	}else if (wanna_change == "n" || wanna_change == "")
+	{
+		// Also doing nothing
+	}else{std::println("Not a valid responce!");}
+	std::println("Saving...");
+	responce(answers);
 }
