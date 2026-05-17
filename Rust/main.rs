@@ -36,8 +36,8 @@ fn main()
 
     if wanna_redo == "y"
     {
-        answers = redo_answers(answers);
-    }else if wanna_redo == "n"{
+        answers = change_answer(answers);
+    }else if wanna_redo == "n" || wanna_redo == "" {
         // Do nothing.
     }else{
         println!("Not a valid responce.");
@@ -55,6 +55,15 @@ fn main()
 /// it goes into a `loop`, giving the possibility to change the 
 /// answers, whatever the time's the user want to.
 
+/// There, the `answr_nmbr` is re-asigned after the input, that's to
+/// sanitize the given input.
+/// Then, it compares `answr_nmbr` to "n", if the user want to quit
+/// the change_answer function it return the `answers_registry` that
+/// could be modified in previous iterations of the `loop`. If that
+/// condition isn't true it converts `answr_nmbr` to an u8 re-assigning
+/// it, then check if is minus or ecual than 8, if it's true does.
+
+
 fn change_answer(mut answers_registry: u8) -> u8
 {
     println!("Whitch one of your answers you wanna change?");
@@ -71,14 +80,6 @@ fn change_answer(mut answers_registry: u8) -> u8
             .trim()
             .parse()
             .expect("Failed to sanitize input!");
-
-        /// There, the `answr_nmbr` is re-asigned after the input, that's to
-        /// sanitize the given input.
-        /// Then, it compares `answr_nmbr` to "n", if the user want to quit
-        /// the change_answer function it return the `answers_registry` that
-        /// could be modified in previous iterations of the `loop`. If that
-        /// condition isn't true it converts `answr_nmbr` to an u8 re-assigning
-        /// it, then check if is minus or ecual than 8, if it's true does
 
         if answr_nmbr == "n" || answr_nmbr == ""
         {
@@ -108,6 +109,7 @@ fn change_answer(mut answers_registry: u8) -> u8
 ///
 /// It works printing seven "0" and fetching the bit in the possition
 /// specified by the iterator of the `while` loop and printing it,
+
 fn comparison(word: u8)
 {
     println!("\nYou could be using 8 bytes of storage:");
@@ -115,10 +117,14 @@ fn comparison(word: u8)
     let mut i = 0;
     while i < 8
     {
-        print!("0000000");
+        print!("[0000000");
 
-        println!("{}", read(word, i));
-
+        if read(word, i) == 1
+        {
+            println!("1] --> (true)");
+        }else{
+            println!("0] --> (false)");
+        }
         i += 1;
     }
 }
@@ -147,7 +153,6 @@ fn responce(answers: u8)
     comparison(answers);
     println!("\nInstead that's using: {}", list(answers));
     println!("                          |-> {answers} in decimal.\n");
-    print!("\n");
 }
 
 fn interviewer(index: u8) -> bool
