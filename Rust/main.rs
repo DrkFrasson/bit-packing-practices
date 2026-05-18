@@ -1,4 +1,5 @@
 use std::io;
+use std::io::Write;
 
 /// # bitwise operations and bit-packing in The Rust Programming Language.
 /// This little program is a practice to dominate the bitwise operators
@@ -21,9 +22,12 @@ fn main()
     }
 
     print!("\n");
-    println!("Do you wanna change someone of your responces? (default: n)");
+
+    print!("Do you wanna change someone of your responces? (default: n) > ");
 
     let mut wanna_redo: String = Default::default();
+
+    let _ = io::stdout().flush();
 
     io::stdin()
         .read_line(&mut wanna_redo)
@@ -43,7 +47,7 @@ fn main()
         println!("Not a valid responce.");
     }
 
-    print!("Saving...");
+    print!("\nSaving...");
 
     responce(answers);
 }
@@ -66,11 +70,13 @@ fn main()
 
 fn change_answer(mut answers_registry: u8) -> u8
 {
-    println!("Whitch one of your answers you wanna change?");
+    print!("Whitch one of your answers you wanna change? > ");
 
     loop
     {
         let mut answr_nmbr: String = String::new();
+
+        let _ = io::stdout().flush();
 
         io::stdin()
             .read_line(&mut answr_nmbr)
@@ -95,11 +101,12 @@ fn change_answer(mut answers_registry: u8) -> u8
                 answr_nmbr -= 1;
                 answers_registry = flip(answers_registry, answr_nmbr);
             }else{
+                println!("That didn't look like a valid responce!");
                 return answers_registry;
             }
         }
         println!("{}", list(answers_registry));
-        println!("Do you wanna change other answer?, number/(default: n)");
+        print!("Do you wanna change other answer?, number/(default: n) > ");
     }
 }
 
@@ -168,9 +175,11 @@ fn interviewer(index: u8) -> bool
     "Do you wanna learn about bitpacking"
     ];
 
-    println!("0{}. {}?", index + 1, questions_db[index as usize]);
+    print!("0{}. {}? > ", index + 1, questions_db[index as usize]);
 
     let mut answer: String = Default::default();
+
+    let _ = io::stdout().flush();
 
     io::stdin()
         .read_line(&mut answer)

@@ -2,19 +2,6 @@
 #include <string>
 #include <print>
 
-std::string ltrim(const std::string &);
-std::string rtrim(const std::string &);
-
-
-/*
-int main()
-{
-    string n_temp;
-    getline(cin, n_temp);
-
-    int n = stoi(ltrim(rtrim(n_temp)));
-*/
-
 unsigned char write(unsigned char answers_registry, unsigned char possition, bool digit)
 {
 	switch (digit)
@@ -75,7 +62,7 @@ bool interviewer(short index)
 
 unsigned char change_answer(unsigned char answers_registry)
 {
-	std::println("Whitch one of your answers you wanna change?");
+	std::print("Whitch one of your answers you wanna change? > ");
 	while (true)
 	{
 		std::string answr;
@@ -95,7 +82,7 @@ unsigned char change_answer(unsigned char answers_registry)
 			}
 		}
 		std::println("{}", list(answers_registry));
-		std::println("Do you want to change other responce?, number/(default: n)");
+		std::print("Do you want to change other responce?, number/(default: n) > ");
 	}
 }
 
@@ -106,12 +93,12 @@ void comparison(unsigned char answers)
 	std::string i_readed;
 	for(short i = 0; i < 8; i++)
 	{
-		std::print("0000000");
+		std::print("[0000000");
 		if (read(answers, i) == 1)
 		{
-			std::println("1 --> (true)");
+			std::println("1] --> (true)");
 		}else{
-			std::println("0 --> (false)");
+			std::println("0] --> (false)");
 		}
 	}
 }
@@ -132,7 +119,7 @@ int main()
 	{
 		answers = write(answers, i, (interviewer(i)));
 	}
-	std::println("Do you wanna change someone of your responces?(default: n)");
+	std::print("\nDo you wanna change someone of your responces?(default: n) > ");
 	std::string wanna_change;
 	std::cin >> wanna_change;
 	if (wanna_change == "y")
@@ -142,6 +129,7 @@ int main()
 	{
 		// Also doing nothing
 	}else{std::println("Not a valid responce!");}
-	std::println("Saving...");
+	std::println("\nSaving...");
 	responce(answers);
+	std::print("\n");
 }
