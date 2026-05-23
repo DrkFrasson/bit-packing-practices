@@ -80,6 +80,8 @@ fn change_answer(mut answers_registry: u8) -> u8
 {
     print!("Whitch one of your answers you wanna change? \x1b[1;31m\x1b[33m>\x1B[22m\x1b[39m ");
 
+    let mut tolerance: u8 = 0;
+
     loop
     {
         let mut answr_nmbr: String = String::new();
@@ -99,23 +101,37 @@ fn change_answer(mut answers_registry: u8) -> u8
         {
             return answers_registry;
         }else{
-            let mut answr_nmbr: u8 = answr_nmbr
-                .trim()
-                .parse()
-                .expect("Failed to convert to number!");
 
-            if answr_nmbr <= 8
+            match foot_shoot(answr_nmbr)
             {
-                answr_nmbr -= 1;
-                answers_registry = flip(answers_registry, answr_nmbr);
-            }else{
-                println!("That didn't look like a valid responce!");
-                return answers_registry;
+                Ok(mut number) => {
+                    if number <= 8
+                    {
+                        number -= 1;
+                        answers_registry = flip(answers_registry, number);
+                    }else{
+                        println!("\x1b[1;31m\x1b[31mError:\x1B[22m\x1b[39m Index out of bounds!");
+                        if tolerance < 3 {println!("Try again!");}else{return answers_registry;}
+                        tolerance += 1;
+                    }
+                },
+                Err(..) => {
+                     println!("That didn't look like a valid responce!");
+                     return answers_registry;
+                }
             }
         }
-        println!("{}", list(answers_registry));
+        println!("\x1b[1;31m\x1b[33m=>\x1B[22m\x1b[39m {}", list(answers_registry));
         print!("Do you wanna change other answer?, \x1b[2mnumber/(default: n)\x1B[22m \x1b[1;31m\x1b[33m>\x1B[22m\x1b[39m ");
     }
+}
+
+fn foot_shoot(answr_nmbr: String) -> std::result::Result<u8, std::num::ParseIntError>
+{
+    let answr_nmbr: u8 = answr_nmbr
+        .trim()
+        .parse()?;
+    return Ok(answr_nmbr);
 }
 
 /// ## `fn comparison()`
