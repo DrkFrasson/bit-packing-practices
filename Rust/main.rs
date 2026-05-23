@@ -18,7 +18,7 @@ fn main()
 // \x1b[1;31m\x1b[31m => Red Bold
 // \x1b[1;31m\x1b[33m => Yellow Bold
 // \x1b[1;31m\x1b[34m => Blue Bold
-// \x1b[2m => 
+// \x1b[2m => Faint
 // \x1B[22m\x1b[39m => Clear
 
 
@@ -136,9 +136,9 @@ fn comparison(word: u8)
 
         if read(word, i) == 1
         {
-            println!("1] --> \x1b[1;31m\x1b[34m(true)\x1B[22m\x1b[39m");
+            println!("\x1b[1;31m\x1b[34m1\x1B[22m\x1b[39m] --> \x1b[1;31m\x1b[34m(true)\x1B[22m\x1b[39m");
         }else{
-            println!("0] --> \x1b[1;31m\x1b[31m(false)\x1B[22m\x1b[39m");
+            println!("\x1b[1;31m\x1b[31m0\x1B[22m\x1b[39m] --> \x1b[1;31m\x1b[31m(false)\x1B[22m\x1b[39m");
         }
         i += 1;
     }
@@ -153,8 +153,8 @@ fn list(answers: u8) -> String
     {
         match read(answers, 7 - index)
         {
-            1 => response += "1",
-            0 => response += "0",
+            1 => response += "\x1b[1;31m\x1b[34m1\x1B[22m\x1b[39m",
+            0 => response += "\x1b[1;31m\x1b[31m0\x1B[22m\x1b[39m",
             _other => panic!("Not possible"),
         }
         index += 1;
@@ -166,7 +166,7 @@ fn responce(answers: u8)
 {
     print!("\n");
     comparison(answers);
-    println!("\nInstead that's using: \x1b[1;31m\x1b[32m{}\x1B[22m\x1b[39m", list(answers));
+    println!("\nInstead that's using: {}", list(answers));
     println!("                          |-> {answers} in decimal.\n");
 }
 
@@ -183,7 +183,7 @@ fn interviewer(index: u8) -> bool
     "Do you wanna learn about bitpacking"
     ];
 
-    print!("\x1b[1;31m\x1b[32m0{}.\x1B[22m\x1b[39m {}? \x1b[1;31m\x1b[33m>\x1B[22m\x1b[39m ", index + 1, questions_db[index as usize]);
+    print!("\x1b[1;31m\x1b[33m0{}.\x1B[22m\x1b[39m {}? \x1b[1;31m\x1b[33m>\x1B[22m\x1b[39m ", index + 1, questions_db[index as usize]);
 
     let mut answer: String = Default::default();
 
