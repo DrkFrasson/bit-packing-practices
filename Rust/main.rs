@@ -12,7 +12,15 @@ use std::io::Write;
 fn main()
 {
     let mut answers: u8 = 0;
-    println!("The following questions are [y]es or [n]ot answers:");
+    println!("The following questions are \x1b[1;31m\x1b[34m[y]es \x1B[22m\x1b[39mor \x1b[1;31m\x1b[31m[n]ot \x1B[22m\x1b[39manswers:");
+
+
+// \x1b[1;31m\x1b[31m => Red Bold
+// \x1b[1;31m\x1b[33m => Yellow Bold
+// \x1b[1;31m\x1b[34m => Blue Bold
+// \x1b[2m => 
+// \x1B[22m\x1b[39m => Clear
+
 
     let mut i: u8 = 0;
     while i < 8
@@ -23,7 +31,7 @@ fn main()
 
     print!("\n");
 
-    print!("Do you wanna change someone of your responces? (default: n) > ");
+    print!("Do you wanna change someone of your responces? \x1b[2m(default: n)\x1B[22m \x1b[1;31m\x1b[33m>\x1B[22m\x1b[39m ");
 
     let mut wanna_redo: String = Default::default();
 
@@ -70,7 +78,7 @@ fn main()
 
 fn change_answer(mut answers_registry: u8) -> u8
 {
-    print!("Whitch one of your answers you wanna change? > ");
+    print!("Whitch one of your answers you wanna change? \x1b[1;31m\x1b[33m>\x1B[22m\x1b[39m ");
 
     loop
     {
@@ -106,7 +114,7 @@ fn change_answer(mut answers_registry: u8) -> u8
             }
         }
         println!("{}", list(answers_registry));
-        print!("Do you wanna change other answer?, number/(default: n) > ");
+        print!("Do you wanna change other answer?, \x1b[2mnumber/(default: n)\x1B[22m \x1b[1;31m\x1b[33m>\x1B[22m\x1b[39m ");
     }
 }
 
@@ -128,9 +136,9 @@ fn comparison(word: u8)
 
         if read(word, i) == 1
         {
-            println!("1] --> (true)");
+            println!("1] --> \x1b[1;31m\x1b[34m(true)\x1B[22m\x1b[39m");
         }else{
-            println!("0] --> (false)");
+            println!("0] --> \x1b[1;31m\x1b[31m(false)\x1B[22m\x1b[39m");
         }
         i += 1;
     }
@@ -158,7 +166,7 @@ fn responce(answers: u8)
 {
     print!("\n");
     comparison(answers);
-    println!("\nInstead that's using: {}", list(answers));
+    println!("\nInstead that's using: \x1b[1;31m\x1b[32m{}\x1B[22m\x1b[39m", list(answers));
     println!("                          |-> {answers} in decimal.\n");
 }
 
@@ -175,7 +183,7 @@ fn interviewer(index: u8) -> bool
     "Do you wanna learn about bitpacking"
     ];
 
-    print!("0{}. {}? > ", index + 1, questions_db[index as usize]);
+    print!("\x1b[1;31m\x1b[32m0{}.\x1B[22m\x1b[39m {}? \x1b[1;31m\x1b[33m>\x1B[22m\x1b[39m ", index + 1, questions_db[index as usize]);
 
     let mut answer: String = Default::default();
 
@@ -190,7 +198,7 @@ fn interviewer(index: u8) -> bool
         .parse()
         .expect("Failed to sanitize input!");
 
-    return if answer == "y" { true }else if answer == "n" { false }else{ println!("Not such a valid response!, again!"); interviewer(index) }
+    return if answer == "y" { true }else if answer == "n" { false }else{ println!("=> Not such a valid response!, again!"); interviewer(index) }
 }
 
 fn write(answers_registry: u8, possition: u8, digit:/*--> digit indicates if it puts a 1 or 0 ->*/ bool) -> u8
