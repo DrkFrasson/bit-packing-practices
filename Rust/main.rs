@@ -1,6 +1,13 @@
 use std::io;
 use std::io::Write;
 
+
+// \x1b[1;31m\x1b[31m => Red Bold
+// \x1b[1;31m\x1b[33m => Yellow Bold
+// \x1b[1;31m\x1b[34m => Blue Bold
+// \x1b[2m => Faint
+// \x1B[22m\x1b[39m => Clear
+
 /// # bitwise operations and bit-packing in The Rust Programming Language.
 /// This little program is a practice to dominate the bitwise operators
 /// in bit-packing, in fact it didn't have a real advantage because it only
@@ -13,14 +20,6 @@ fn main()
 {
     let mut answers: u8 = 0;
     println!("The following questions are \x1b[1;31m\x1b[34m[y]es \x1B[22m\x1b[39mor \x1b[1;31m\x1b[31m[n]ot \x1B[22m\x1b[39manswers:");
-
-
-// \x1b[1;31m\x1b[31m => Red Bold
-// \x1b[1;31m\x1b[33m => Yellow Bold
-// \x1b[1;31m\x1b[34m => Blue Bold
-// \x1b[2m => Faint
-// \x1B[22m\x1b[39m => Clear
-
 
     let mut i: u8 = 0;
     while i < 8
@@ -214,7 +213,7 @@ fn interviewer(index: u8) -> bool
         .parse()
         .expect("Failed to sanitize input!");
 
-    return if answer == "y" { true }else if answer == "n" { false }else{ println!("=> Not such a valid response!, again!"); interviewer(index) }
+    return if answer == "y" { true }else if answer == "n" { false }else{ println!("\x1b[1;31m\x1b[33m=>\x1B[22m\x1b[39m Not such a valid response!, again!"); interviewer(index) }
 }
 
 fn write(answers_registry: u8, possition: u8, digit:/*--> digit indicates if it puts a 1 or 0 ->*/ bool) -> u8

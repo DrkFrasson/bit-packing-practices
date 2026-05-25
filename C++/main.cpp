@@ -41,7 +41,7 @@ bool interviewer(short index)
 	"Do you like the Zig Programming Language",
 	"Is DOS earlier than UNIX",
 	"A WORD is 2 bytes",
-	"Is the microcontroler 8085 of 16-bit arch",
+	"Is the microcontroler 8085 16-bit arch",
 	"Is the LM555 a multi-vibrator",
 	};
 	std::print("0{}. {}? > ", (index + 1), questions_db[index]);
