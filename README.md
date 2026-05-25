@@ -16,10 +16,8 @@ In this program this didn't have a real advantage, rather, adding complexity, be
 
 # Repository Index:
 ```bash
-DrkFrasson/bit-packing-practices/ $ ls ./*
+DrkFrasson@github.com:~/bit-packing-practices/ $ ls ./*
 
-./c_lang -> Simbolic Link to the actual place of the C++ version of the program.
-./kotlin_lang -> Simbolic Link to the actual place of the Kotlin version of the program.(Coming soon!)
 ./README.md -> README of the repo. (This file)
 
 ./Rust/
@@ -29,9 +27,9 @@ DrkFrasson/bit-packing-practices/ $ ls ./*
 ./C++/
     main.cpp -> Version of the program in the C++ programming language.
     a.out* -> Binary compiled from ./main.cpp
+
+./Zig/
+    main.zig -> Version of the program in the Zig programming language.
 ```
 # Sources:
-I learned all this from this awesome video from [Core Dumped](https://www.youtube.com/@CoreDumpped):
-[Why Some low-level Projects Are Full of Weird Code Like This](https://www.youtube.com/watch?v=z7wVUfnm7M0&pp=0gcJCd4KAYcqIYzv)
-
-
+- bit-packing: [Core Dumped](https://www.youtube.com/@CoreDumpped): [Why Some low-level Projects Are Full of Weird Code Like This](https://www.youtube.com/watch?v=z7wVUfnm7M0&pp=0gcJCd4KAYcqIYzv)
