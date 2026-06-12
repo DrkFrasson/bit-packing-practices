@@ -2,6 +2,25 @@
 #include <string>
 #include <print>
 
+
+// \x1b[1;31m\x1b[31m => Red Bold
+// \x1b[1;31m\x1b[33m => Yellow Bold
+// \x1b[1;31m\x1b[34m => Blue Bold
+// \x1b[2m => Faint
+// \x1B[22m\x1b[39m / \x1b[0m => Clear
+
+std::string questions_db[8] = {
+	"Does exist micro-controlers with 64 bits architecture",
+	"Is Processing like a dialect of C++",
+	"Is Assembler a kind of a representation of machine code rather than a language",
+	"Do you like the Zig Programming Language",
+	"Is DOS earlier than UNIX",
+	"A WORD is 2 bytes",
+	"Is the microcontroler 8085 16-bit arch",
+	"Is the LM555 a multi-vibrator",
+};
+
+
 unsigned char write(unsigned char answers_registry, unsigned char possition, bool digit)
 {
 	switch (digit)
@@ -23,28 +42,18 @@ std::string list (unsigned char answers_registry)
 		unsigned char i_readed = read(answers_registry, i);
 		if ( i_readed == 0)
 		{
-			string_of_bits += "0";
+			string_of_bits += "\x1b[1;31m\x1b[31m0";
 		}else if(i_readed == 1){
-			string_of_bits += "1";
+			string_of_bits += "\x1b[1;31m\x1b[34m1";
 		}else{std::println("Error in list(), index {}", i);}
 	}
-	return string_of_bits;
+	return (string_of_bits + "\x1b[0m");
 }
 
 bool interviewer(short index)
 {
 	std::string answer;
-	std::string questions_db[8] = {
-	"Does exist micro-controlers with 64 bits architecture",
-	"Is Processing like a dialect of C++",
-	"Is Assembler a kind of a representation of machine code rather than a language",
-	"Do you like the Zig Programming Language",
-	"Is DOS earlier than UNIX",
-	"A WORD is 2 bytes",
-	"Is the microcontroler 8085 16-bit arch",
-	"Is the LM555 a multi-vibrator",
-	};
-	std::print("0{}. {}? > ", (index + 1), questions_db[index]);
+	std::print("\x1b[1;31m\x1b[33m0{}.\x1b[0m {}? \x1b[1;31m\x1b[33m>\x1b[0m ", (index + 1), questions_db[index]);
 	std::cin >> answer;
 	if (answer == "y")
 	{
@@ -96,9 +105,9 @@ void comparison(unsigned char answers)
 		std::print("[0000000");
 		if (read(answers, i) == 1)
 		{
-			std::println("1] --> (true)");
+			std::println("\x1b[1;31m\x1b[34m1\x1b[0m] --> (\x1b[1;31m\x1b[34mtrue\x1b[0m)");
 		}else{
-			std::println("0] --> (false)");
+			std::println("\x1b[1;31m\x1b[31m0\x1b[0m] --> (\x1b[1;31m\x1b[31mfalse\x1b[0m)");
 		}
 	}
 }
