@@ -24,19 +24,20 @@ void responce(unsigned char answers);
 int main()
 {
 	std::string feedback_mode;
-	std::print("How do you want the feedback for your responses \x1b[1;31m\x1b[33m:\x1b[0m \n \x1b[1;31m\x1b[33m[A]\x1b[0m => After each response.\n \x1b[1;31m\x1b[33m[B]\x1b[0m => At the end of the program.\x1B[s\n\x1B[3A\x1B[50C");
+	std::print("How do you want the feedback for your responses \x1b[1;33m:\x1b[0m \n \x1b[1;33m[A]\x1b[0m => After each response.\n \x1b[1;33m[B]\x1b[0m => At the end of the program.\x1B[s\n\x1B[3A\x1B[50C");
 	std::cin >> feedback_mode;
 
 	std::println("\x1b[u");
 	while (feedback_mode != "A" && feedback_mode != "B") {
-		std::print("Press \x1b[33m[A]\x1b[0m or \x1b[33m[B]\x1b[0m, or \x1b[33m[C]\x1b[0m to \x1b[1;31m\x1b[31mget the fuck out\x1b[0m of here! \x1b[1;31m\x1b[33m>\x1b[0m ");
+		std::print("Press \x1b[33m[A]\x1b[0m or \x1b[33m[B]\x1b[0m, or \x1b[33m[C]\x1b[0m to \x1b[1;31mget the fuck out\x1b[0m of here! \x1b[1;33m>\x1b[0m ");
 		std::cin >> feedback_mode;
 		if (feedback_mode == "C") { return 1; } else {} // Ends the program if the user press "C".
 	}
+	std::print("\n");
 
-	std::println("The following questions are [y]es or [n]ot answers:");
+	std::println("\x1b[1;33m>-\x1b[0mThe following questions are \x1b[1;34m[y]\x1b[22mes\x1b[0m or \x1b[31m\x1b[1;31m[n]\x1b[22mot\x1b[0m answers\x1b[1;33m->\x1b[0m");
 	unsigned char answers = 0;
-	const unsigned char reference = 0b01110000;
+	const unsigned char reference = 0b00001110;
 
 	if (feedback_mode == "A") {
 		for(short i = 0; i < 8 ; i++)
@@ -51,25 +52,12 @@ int main()
 		}
 		feedback(answers, reference, 1);
 	} else {}
-/*
-	std::print("\nDo you wanna change someone of your responses?(default: n) > ");
-	std::string wanna_change;
-	std::cin >> wanna_change;
-	if (wanna_change == "y")
-	{
-		answers = change_answer(answers);
-	}else if (wanna_change == "n" || wanna_change == "")
-	{
-		// Also doing nothing
-	}else{std::println("Not a valid response!");}
-	std::println("\nSaving...");
-*/
 	responce(answers);
 	std::print("\n");
 }
 
 std::string questions_db[8] = {
-	"When you compile a program it's binary could run in every machine",
+	"When you compile a program, it's binary could run in every machine",
 	"Is Processing like a dialect of C++",
 	"Is Assembler a kind of a representation of machine code rather than a language",
 	"Do you like the Zig Programming Language",
@@ -80,9 +68,9 @@ std::string questions_db[8] = {
 };
 
 std::string feedback_db[8] = {
-	"When a compiler convert you code in instructions it's probably gonna create architecture specific instructions, or even new instructions of your processor, so older processors or different architectures couldn't run it.",
+	"When a compiler convert you code in instructions it's probably\n gonna create architecture specific instructions, or even new\n instructions of your processor, so older processors or different\n architectures couldn't run it.",
 	"The Processing lang., used in Arduino is based on C++.",
-	"Assembler shows each one of the instructions in machine code (binary) in readable characters and words, so in practice, it has no abstraction layers.",
+	"Assembler shows each one of the instructions in machine code (binary)\n in readable characters and words, so in practice,\n it has no abstraction layers.",
 	"That's OK!",
 	"The first UNIX implementation was created in 1969, and DOS in 1981.",
 	"That's debatable.",
@@ -94,11 +82,11 @@ std::string feedback_db[8] = {
 void feedback(unsigned char answers_registry, unsigned char REFERENCE, unsigned char index)
 {
 	if (read(answers_registry, index) == read(REFERENCE, index)) {
-		std::println(" => Correct.");
+		std::println(" \x1b[1;33m=> \x1b[32mCorrect.");
 	} else {
-		std::println(" => Wrong.");
+		std::println(" \x1b[1;33m=> \x1b[31mWrong.");
 	}
-	std::println("{}", feedback_db[index]);
+	std::println(" {}\x1b[0m\n", feedback_db[index]);
 }
 
 
@@ -123,9 +111,9 @@ std::string list (unsigned char answers_registry)
 		unsigned char i_readed = read(answers_registry, i);
 		if ( i_readed == 0)
 		{
-			string_of_bits += "\x1b[1;31m\x1b[31m0";
+			string_of_bits += "\x1b[1;31m0";
 		}else if(i_readed == 1){
-			string_of_bits += "\x1b[1;31m\x1b[34m1";
+			string_of_bits += "\x1b[1;34m1";
 		}else{std::println("Error in list(), index {}", i);}
 	}
 	return (string_of_bits + "\x1b[0m");
@@ -134,7 +122,7 @@ std::string list (unsigned char answers_registry)
 bool interviewer(short index)
 {
 	std::string answer;
-	std::print("\x1b[1;31m\x1b[33m0{}.\x1b[0m {}? \x1b[1;31m\x1b[33m>\x1b[0m ", (index + 1), questions_db[index]);
+	std::print("\x1b[1;33m0{}.\x1b[0m {}? \x1b[1;33m>\x1b[0m ", (index + 1), questions_db[index]);
 	std::cin >> answer;
 	if (answer == "y")
 	{
@@ -150,33 +138,6 @@ bool interviewer(short index)
 }
 
 
-unsigned char change_answer(unsigned char answers_registry)
-{
-	std::print("Witch one of your answers you wanna change? > ");
-	while (true)
-	{
-		std::string answr;
-		std::cin >> answr;
-		if(answr == "n" || answr == "" )
-		{
-			return answers_registry;
-		}else{
-			unsigned char answr_nmbr = stoi(answr);
-			if (answr_nmbr <= 8)
-			{
-				answr_nmbr -= 1;
-				answers_registry = flip(answers_registry, answr_nmbr);
-			}else{
-				std::println("That didn't look like a valid response!");
-				return answers_registry;
-			}
-		}
-		std::println("{}", list(answers_registry));
-		std::print("Do you want to change other response?, number/(default: n) > ");
-	}
-}
-
-
 void comparison(unsigned char answers)
 {
 	std::println("You could be using 8 bytes of storage:");
@@ -186,9 +147,9 @@ void comparison(unsigned char answers)
 		std::print("[0000000");
 		if (read(answers, i) == 1)
 		{
-			std::println("\x1b[1;31m\x1b[34m1\x1b[0m] --> (\x1b[1;31m\x1b[34mtrue\x1b[0m)");
+			std::println("\x1b[1;34m1\x1b[0m] --> (\x1b[1;34mtrue\x1b[0m)");
 		}else{
-			std::println("\x1b[1;31m\x1b[31m0\x1b[0m] --> (\x1b[1;31m\x1b[31mfalse\x1b[0m)");
+			std::println("\x1b[1;31m0\x1b[0m] --> (\x1b[1;31mfalse\x1b[0m)");
 		}
 	}
 }
